@@ -29,6 +29,8 @@ namespace EvenementsAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IParticipationsBL,ParticipationssBL>();
+            services.AddScoped<IVillesBL,VillesBL>();
 
             services.AddControllers(o => o.AllowEmptyInputInBodyModelBinding = true)
                 .ConfigureApiBehaviorOptions(o => o.SuppressModelStateInvalidFilter = true)
