@@ -20,22 +20,8 @@ namespace EvenementsAPI.BusinessLogic
 
         public Categorie Add(Categorie value)
         {
-            if(value == null)
-            {
-                throw new HttpException
-                {
-                    Errors = new { Errors = "Parametres d'entrée non valides" },
-                    StatusCode = StatusCodes.Status400BadRequest
-                };
-            }
-            if (String.IsNullOrEmpty(value.Nom))
-            {
-                throw new HttpException
-                {
-                    Errors = new { Errors = "Parametres d'entrée non valides: nom de catégorie inexistant" },
-                    StatusCode = StatusCodes.Status400BadRequest
-                };
-            }
+            ValiderChamps(value);
+
             value.Id = Repository.IdSequenceCategorie++;
             Repository.Categories.Add(value);
 
@@ -43,14 +29,8 @@ namespace EvenementsAPI.BusinessLogic
         }
         public Categorie Update(int id, Categorie value)
         {
-            if (value == null)
-            {
-                throw new HttpException
-                {
-                    Errors = new { Errors = "Parametres d'entrée non valides" },
-                    StatusCode = StatusCodes.Status400BadRequest
-                };
-            }
+
+            ValiderChamps(value);
 
             var categorie = Repository.Categories.FirstOrDefault(x => x.Id == id);
 
@@ -92,6 +72,27 @@ namespace EvenementsAPI.BusinessLogic
             }
 
             Repository.Categories.Remove(categorie);
+        }
+
+        private void ValiderChamps(Categorie value)
+        {
+            if (value == null)
+            {
+                throw new HttpException
+                {
+                    Errors = new { Errors = "Parametres d'entrée non valides" },
+                    StatusCode = StatusCodes.Status400BadRequest
+                };
+            }
+
+            if (String.IsNullOrEmpty(value.Nom))
+            {
+                throw new HttpException
+                {
+                    Errors = new { Errors = "Parametres d'entrée non valides: nom de catégorie inexistant" },
+                    StatusCode = StatusCodes.Status400BadRequest
+                };
+            }
         }
     }
 }
