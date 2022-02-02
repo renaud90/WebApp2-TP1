@@ -17,6 +17,7 @@ namespace EvenementsAPI.Models
         public string Titre { get; set; }
         [Required]
         public string Description { get; set; }
+        [Required]
         [MinLength(1)]
         public IEnumerable<int> IdsCategories { get; set; }
         [Required]
